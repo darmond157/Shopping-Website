@@ -1,0 +1,19 @@
+admin
+--------------------------
+1-category
+2-products
+3-offer codes
+4-users
+5-payment terminal
+6-transactions
+7-factor
+8-basket
+--------------------------
+9-two step /user/admin
+10-email setting
+--------------------------
+11-security logs (ip-user-date-browser-url)
+--------------------------
+12-user level
+13-refferal market (inviter code)
+
