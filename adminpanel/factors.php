@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>پنل مدیریت | تراکنش ها</title>
+  <title>پنل مدیریت | فاکتور ها </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -145,7 +145,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index3.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">پنل مدیریت</span>
@@ -170,7 +170,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="dashboard.html" class="nav-link">
+              <a href="dashboard.php" class="nav-link">
                 <i class="nav-icon fa fa-dashboard"></i>
                 <p>
                   داشبورد
@@ -178,7 +178,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="admins.html" class="nav-link">
+              <a href="admins.php" class="nav-link">
                 <i class="nav-icon fa fa-user"></i>
                 <p>
                  مدیریت ادمین
@@ -186,7 +186,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="users.html" class="nav-link">
+              <a href="users.php" class="nav-link">
                 <i class="nav-icon fa fa-users"></i>
                 <p>
                   مدیریت کاربران
@@ -194,7 +194,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="category.html" class="nav-link">
+              <a href="category.php" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
                 <p>
                   مدیریت دسته بندی
@@ -202,7 +202,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="products.html" class="nav-link">
+              <a href="products.php" class="nav-link active">
                 <i class="nav-icon fa fa-th"></i>
                 <p>
                  مدیریت محصولات
@@ -210,7 +210,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="transactions.html" class="nav-link active">
+              <a href="transactions.php" class="nav-link">
                 <i class="nav-icon fa fa-credit-card"></i>
                 <p>
                 مدیریت تراکنش ها
@@ -218,7 +218,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="offercodes.html" class="nav-link">
+              <a href="offercodes.php" class="nav-link">
                 <i class="nav-icon fa fa-percent"></i>
                 
                 <p>
@@ -237,22 +237,28 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="twostep.html" class="nav-link">
+                  <a href="twostep.php" class="nav-link">
                     <i class="fa fa-lock nav-icon"></i>
                     <p>ورود دو مرحله ای</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="captch.html" class="nav-link">
+                  <a href="captch.php" class="nav-link">
                     <i class="fa fa-puzzle-piece nav-icon"></i>
                     <p>Re-Captcha</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="emailSetting.php" class="nav-link">
+                    <i class="fa fa-envelope nav-icon"></i>
+                    <p>تنظیمات ایمیل</p>
                   </a>
                 </li>
               </ul>
             </li>
 
             <li class="nav-item">
-              <a href="logs.html" class="nav-link">
+              <a href="logs.php" class="nav-link">
                 <i class="nav-icon fa fa-search"></i>
                 <p>
                   سیستم گزارش حراست 
@@ -261,7 +267,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="index.html" class="nav-link">
+              <a href="index.php" class="nav-link">
                 <i class="nav-icon fa fa-power-off"></i>
                 <p>
                   خروج 
@@ -285,7 +291,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">تراکنش ها</h1>
+            <h1 class="m-0 text-dark">فاکتور ها</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
@@ -297,6 +303,9 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+ 
+      
+     
 
     <!-- Main content -->
     <section class="content">
@@ -369,15 +378,11 @@
         <div class="row">
           <!-- Left col -->
           <section class="col-lg-12 connectedSortable">
-           
-
-
-
             <div class="row">
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">تراکنش ها</h3>
+                    <h3 class="card-title">کل محصولات</h3>
     
                     <div class="card-tools">
                       <div class="input-group input-group-sm" style="width: 150px;">
@@ -393,39 +398,30 @@
                   <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
                       <tr>
-                        <th>شماره فاکتور</th>
-                        <th>کاربر</th>
-                        <th>محصولات</th>
-                        <th>مجموع قیمت</th>
-                        <th>تاریخ</th>
+                        <th>#</th>
+                        <th>شناسه فاکتور</th>
+                        <th>نام کاربر</th>
+                        <th>تاریخ ثبت</th>
+                        <th>تاریخ پرداخت</th>
+                        <th>مبلغ نهایی</th>
+                        <th>تخفیف</th>
+                        <th>تعداد اقلام</th>
+                        <th>مشاهده سبد خرید</th>
+                        <th>وضعیت</th>
+                        <th>تایید یا عدم تایید</th>
                       </tr>
                       <tr>
-                        <td>183</td>
-                        <td>محمد</td>
-                        <td>11-7-2014</td>
-                        <td><span class="badge badge-success">تایید شده</span></td>
-                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                      </tr>
-                      <tr>
-                        <td>219</td>
-                        <td>حسام</td>
-                        <td>11-7-2014</td>
-                        <td><span class="badge bg-danger">در حال بررسی</span></td>
-                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                      </tr>
-                      <tr>
-                        <td>657</td>
-                        <td>رضا</td>
-                        <td>11-7-2014</td>
-                        <td><span class="badge badge-primary">تایید شده</span></td>
-                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                      </tr>
-                      <tr>
-                        <td>175</td>
-                        <td>پرهام</td>
-                        <td>11-7-2014</td>
-                        <td><span class="badge badge-danger">رد شده</span></td>
-                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
+                        <td>1</td>
+                        <td>242</td>
+                        <td>MHD21</td>
+                        <td>1401/03/17</td>
+                        <td>1401/03/17</td>
+                        <td>3.000.000</td>
+                        <td>150.000</td>
+                        <td>3</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
                       </tr>
                     </table>
                   </div>
@@ -434,6 +430,7 @@
                 <!-- /.card -->
               </div>
             </div><!-- /.row -->
+          </section>
           </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>پنل مدیریت | کپچا</title>
+  <title>پنل مدیریت | تراکنش ها</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -145,7 +145,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index3.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">پنل مدیریت</span>
@@ -170,7 +170,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="dashboard.html" class="nav-link">
+              <a href="dashboard.php" class="nav-link">
                 <i class="nav-icon fa fa-dashboard"></i>
                 <p>
                   داشبورد
@@ -178,7 +178,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="admins.html" class="nav-link">
+              <a href="admins.php" class="nav-link">
                 <i class="nav-icon fa fa-user"></i>
                 <p>
                  مدیریت ادمین
@@ -186,7 +186,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="users.html" class="nav-link">
+              <a href="users.php" class="nav-link">
                 <i class="nav-icon fa fa-users"></i>
                 <p>
                   مدیریت کاربران
@@ -194,7 +194,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="category.html" class="nav-link">
+              <a href="category.php" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
                 <p>
                   مدیریت دسته بندی
@@ -202,7 +202,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="products.html" class="nav-link">
+              <a href="products.php" class="nav-link">
                 <i class="nav-icon fa fa-th"></i>
                 <p>
                  مدیریت محصولات
@@ -210,7 +210,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="transactions.html" class="nav-link">
+              <a href="transactions.php" class="nav-link active">
                 <i class="nav-icon fa fa-credit-card"></i>
                 <p>
                 مدیریت تراکنش ها
@@ -218,7 +218,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="offercodes.html" class="nav-link">
+              <a href="offercodes.php" class="nav-link">
                 <i class="nav-icon fa fa-percent"></i>
                 
                 <p>
@@ -227,7 +227,7 @@
               </a>
             </li>
 
-            <li class="nav-item has-treeview menu-open">
+            <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-cogs"></i>
                 <p>
@@ -237,22 +237,28 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="twostep.html" class="nav-link">
+                  <a href="twostep.php" class="nav-link">
                     <i class="fa fa-lock nav-icon"></i>
                     <p>ورود دو مرحله ای</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="captcha.html" class="nav-link active">
+                  <a href="captch.php" class="nav-link">
                     <i class="fa fa-puzzle-piece nav-icon"></i>
                     <p>Re-Captcha</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="emailSetting.php" class="nav-link">
+                    <i class="fa fa-envelope nav-icon"></i>
+                    <p>تنظیمات ایمیل</p>
                   </a>
                 </li>
               </ul>
             </li>
 
             <li class="nav-item">
-              <a href="logs.html" class="nav-link">
+              <a href="logs.php" class="nav-link">
                 <i class="nav-icon fa fa-search"></i>
                 <p>
                   سیستم گزارش حراست 
@@ -261,7 +267,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="index.html" class="nav-link">
+              <a href="index.php" class="nav-link">
                 <i class="nav-icon fa fa-power-off"></i>
                 <p>
                   خروج 
@@ -285,7 +291,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">کپچا</h1>
+            <h1 class="m-0 text-dark">تراکنش ها</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
@@ -369,55 +375,64 @@
         <div class="row">
           <!-- Left col -->
           <section class="col-lg-12 connectedSortable">
-           
             <div class="row">
-                <div class="col-6">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                          <h3 class="card-title">مثال ساده</h3>
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">تراکنش ها</h3>
+    
+                    <div class="card-tools">
+                      <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+    
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form role="form">
-                          <div class="card-body">
-                            <div class="form-group">
-                              <label for="exampleInputEmail1">آدرس ایمیل</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ایمیل را وارد کنید">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="پسورد را وارد کنید">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputFile">ارسال فایل</label>
-                              <div class="input-group">
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="exampleInputFile">
-                                  <label class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
-                                </div>
-                                <div class="input-group-append">
-                                  <span class="input-group-text" id="">Upload</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="form-check">
-                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">مرا بخاطر بسپار</label>
-                            </div>
-                          </div>
-                          <!-- /.card-body -->
-          
-                          <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">ارسال</button>
-                          </div>
-                        </form>
                       </div>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                      <tr>
+                        <th>#</th>
+                        <th>نام ترمینال</th>
+                        <th>Token</th>
+                        <th>تاریخ پرداخت</th>
+                        <th>TXID</th>
+                        <th>وضعیت</th>
+                        <th>مبلغ</th>
+                        <th>شناسه فاکتور</th>
+                        <th>کاربر</th>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>ABCD</td>
+                        <td>asdifhiasudhf9832f98</td>
+                        <td>1401/03/17</td>
+                        <td>321</td>
+                        <td>done</td>
+                        <td>150.000</td>
+                        <td>3321</td>
+                        <td>-</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
                 </div>
-                <div class="col-6">
-
-                </div>
-            </div>
+                <!-- /.card -->
+              </div>
+            </div><!-- /.row -->
+          </section>
+        </div><!-- /.container-fluid -->
+      </div>
+    </section>
+        <!-- /.content -->
+      </div>
            
+
+
+
           </section>
         
         </div>
