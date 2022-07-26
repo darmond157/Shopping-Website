@@ -4,6 +4,8 @@ $username = "root";
 $password = "";
 $dbname = "shopBardia";
 
+// $conn -> set_charset('utf8');
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 

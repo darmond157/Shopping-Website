@@ -1008,7 +1008,7 @@
                         <li><a href="page-contact.html">تماس با ما</a></li>
                         <li><a href="page-account.html">اکانت من</a></li>
                         <li><a href="page-login.html">ورود به سیستم</a></li>
-                        <li><a href="page-register.html">ثبت نام</a></li>
+                        <li><a href="signUp.html">ثبت نام</a></li>
                         <li>
                           <a href="page-purchase-guide.html">راهنمای خرید</a>
                         </li>
@@ -1364,7 +1364,7 @@
                     <li><a href="page-contact.html">تماس</a></li>
                     <li><a href="page-account.html">حساب من</a></li>
                     <li><a href="page-login.html">ورود به سیستم</a></li>
-                    <li><a href="page-register.html">ثبت نام</a></li>
+                    <li><a href="signUp.html">ثبت نام</a></li>
                     <li><a href="page-purchase-guide.html">راهنمای خرید</a></li>
                     <li>
                       <a href="page-privacy-policy.html">شرایط و ضوابط</a>

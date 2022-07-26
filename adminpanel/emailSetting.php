@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+if (!$_SESSION['checkLogin']) {
+  header('Location: index.php');
+  exit;
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>

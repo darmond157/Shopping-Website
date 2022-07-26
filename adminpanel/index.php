@@ -1,25 +1,41 @@
 <?php
 
+session_start();
+$_SESSION['checkLogin'] = false;
+$_SESSION['userAdmin'] = "";
+
 require_once("../config/DBConfig.php");
+
 if ($_POST) {
-  $message = "";
+  $_SESSION['checkLogin'] = false; //more security
+
   $username = $_POST["username"];
   $password = $_POST["password"];
+
   $command = "select * from login where(username = ?)";
+
   $stmt = $conn->prepare($command);
   $stmt->bind_param("s", $username); // there is one String to Bind ("s")
   $stmt->execute();
   $result = $stmt->get_result();
+
   if ($result->num_rows == 1) {
+
     while ($row = $result->fetch_assoc()) {
-      $passHash = $row["password"];
+
+      $passHash = $row['pass'];
       if (password_verify($password, $passHash)) {
+        $_SESSION['checkLogin'] = true;
+        $_SESSION['userAdmin'] = $username;
         header('Location: dashboard.php');
+        exit;
       } else {
+        $_SESSION['checkLogin'] = false;
         $message = '<p class="alert alert-danger">نام کاربری یا رمز عبور اشتباه است</p>';
       }
     }
   } else {
+    $_SESSION['checkLogin'] = false;
     $message = '<p class="alert alert-danger">نام کاربری یا رمز عبور اشتباه است</p>';
   }
 }
