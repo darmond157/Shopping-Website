@@ -1,7 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Tehran');
-// require_once("../coreScripts/jdf.php");
+require_once("../coreScripts/jdf.php");
 require_once("../config/DBConfig.php");
 if (!$_SESSION['checkLogin']) {
     header('Location: index.php');
@@ -474,10 +474,7 @@ if ($_POST) {
                                                             <td><?php echo $row["phone"]; ?></td>
                                                             <td><?php echo $row["email"]; ?></td>
                                                             <td><?php
-                                                                echo date('Y-m-d H:i:s', $row["registerDate"]);
-                                                                // jdf.scr.ir -> jdate
-                                                                // echo jdate("Y-m-d H:i:s",$row["registerDate"]);
-                                                                // echo jdate("Y-m-d H:i:s",$row["registerDate"],'','','en'); for english numbers
+                                                                echo jdate("Y-m-d H:i:s", $row["registerDate"], '', '', 'en'); //for english numbers
                                                                 ?></td>
                                                             <td><?php
                                                                 if ($row['status'] == "active") {
@@ -489,9 +486,8 @@ if ($_POST) {
                                                             <td>
                                                                 <?php
                                                                 echo '<a class="btn btn-danger" href="../coreScripts/deleteUser.php?username=' . $row["username"] . '">حذف</a>';
-
                                                                 ?>
-                                                                <a href="#" class="btn btn-primary">ویرایش</a>
+                                                                <a onclick="getDataUser('<?php echo $row['username']; ?>')" data-toggle="modal" data-target="#myModal" class="btn btn-primary">ویرایش</a>
 
                                                                 <?php
                                                                 if ($row["status"] == "active") {
@@ -540,6 +536,31 @@ if ($_POST) {
     </div>
     <!-- ./wrapper -->
 
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">اطلاعات کاربر</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditUser" action="coreScripts/editUsers.php" method="POST">
+                        <div id="boxInfoUser"></div>
+                        <div id="resultEditUser"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">خروج</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -577,6 +598,44 @@ if ($_POST) {
     <script src="dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script>
+        function getDataUser(username) {
+            $.ajax({
+                url: "../coreScripts/getDataUser.php",
+                type: "POST",
+                data: "username=" + username,
+                success: function(response) {
+                    $('#boxInfoUser').html(response)
+                }
+            })
+        }
+
+        var formData;
+        $("#formEditUser").unbind('submit').submit(function(evt) {
+            evt.preventDefault();
+            formData = new FormData($(this)[0]);
+            $.ajax({
+                url: "../coreScripts/editUser.php",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                enctype: false,
+                success: function(response) {
+                    document.getElementById('resultEditUser').innerHTML = response;
+                    setTimeout(function() {
+                        document.getElementById("resultEditUser").innerHTML = "";
+                        location.reload();
+                    }, 5000);
+                }
+
+            })
+            return false;
+        })
+    </script>
+
 </body>
 
 </html>
