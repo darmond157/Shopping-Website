@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once('../config/DBConfig.php');
-if($_SESSION['checkLogin']==false){
+if(!$_SESSION['checkLogin']){
     header('Location: index.php');
     exit;
 }

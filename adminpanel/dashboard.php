@@ -5,6 +5,17 @@ if (!$_SESSION['checkLogin']) {
   header('Location: index.php');
   exit;
 }
+require_once("../config/DBConfig.php");
+
+require_once("../lib/utility.php");
+$browser = getBrowser();
+$ip = getIp();
+$os = getOS();
+$url = getUrl();
+$command3 = "insert into logs (url,ip,os,browser) values (?,?,?,?)";
+$stmt = $conn->prepare($command3);
+$stmt->bind_param("ssss", $url, $ip, $os, $browser);
+$stmt->execute();
 
 ?>
 
@@ -259,7 +270,7 @@ if (!$_SESSION['checkLogin']) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="captch.php" class="nav-link">
+                    <a href="captcha.php" class="nav-link">
                       <i class="fa fa-puzzle-piece nav-icon"></i>
                       <p>Re-Captcha</p>
                     </a>

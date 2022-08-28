@@ -5,6 +5,17 @@ if (!$_SESSION['checkLogin']) {
   header('Location: index.php');
   exit;
 }
+require_once("../config/DBConfig.php");
+
+require_once("../lib/utility.php");
+$browser = getBrowser();
+$ip = getIp();
+$os = getOS();
+$url = getUrl();
+$command3 = "insert into logs (url,ip,os,browser) values (?,?,?,?)";
+$stmt = $conn->prepare($command3);
+$stmt->bind_param("ssss", $url, $ip, $os, $browser);
+$stmt->execute();
 
 ?>
 

@@ -1,8 +1,41 @@
 <?php
 
+session_start();
+require_once("../config/DBConfig.php");
 require_once("../lib/utility.php");
 
-session_start();
+
+$browser = getBrowser();
+$ip = getIp();
+$os = getOS();
+$url = getUrl();
+
+$command3 = "insert into logs (url,ip,os,browser) values (?,?,?,?)";
+$stmt1 = $conn->prepare($command3);
+$stmt1->bind_param("ssss", $url, $ip, $os, $browser);
+$stmt1->execute();
+
+$command = "select * from logs";
+$result2 = $conn->query($command);
+$countRows = $result2->num_rows;
+
+// file_put_contents("../log.txt", var_export($result2, true), FILE_APPEND);
+
+$start = 1;
+if (isset($_GET["id"])) {
+  $start = $_GET["id"];
+  $offset = ($_GET["id"] - 1) * 10;
+  $offset = $offset < 0 ? 0 : $offset;
+} else {
+  $start = 1;
+  $offset = 0;
+}
+
+$command2 = "select * from logs limit 10 offset $offset";
+$stmt3 = $conn->prepare($command2);
+$stmt3->execute();
+$result = $stmt3->get_result();
+
 if (!$_SESSION['checkLogin']) {
   header('Location: index.php');
   exit;
@@ -430,25 +463,50 @@ if (!$_SESSION['checkLogin']) {
                     <table id="" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>موتور رندر</th>
-                          <th>مرورگر</th>
-                          <th>سیستم عامل</th>
-                          <th>ورژن</th>
-                          <th>امتیاز</th>
+                          <th>url</th>
+                          <th>browser</th>
+                          <th>OS</th>
+                          <th>IP</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet Explorer 4.0</td>
-                          <td>Win 95+</td>
-                          <td>4</td>
-                          <td>X</td>
-                        </tr>
+                        <?php
+                        while ($row = $result->fetch_assoc()) {
+                        ?>
+                          <tr>
+                            <td><?php echo $row["url"]; ?></td>
+                            <td><?php echo $row["browser"]; ?></td>
+                            <td><?php echo $row["os"]; ?></td>
+                            <td><?php echo $row["ip"]; ?></td>
+                          </tr>
+                        <?php
+                        } ?>
                       </tbody>
                     </table>
                   </div>
                   <!-- /.card-body -->
+                  <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                      <li class="page-item"><a class="page-link" href="logs.php?id=1">&laquo;</a></li>
+                      <?php
+                      $startFinal = $start - 1;
+                      if ($startFinal <= 0) {
+                        $startFinal = 1;
+                      }
+                      if ($start + 5 > (int)($countRows / 10) + 1) {
+                        $end = (int)($countRows / 10) + 1;
+                      } else {
+                        $end = $start + 5;
+                      }
+                      for ($i = $startFinal; $i <= $end; $i++) {
+                      ?>
+                        <li class="page-item"><a class="page-link" href="logs.php?id=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                      <?php
+                      }
+                      ?>
+                      <li class="page-item"><a class="page-link" href="logs.php?id=<?php echo (int)($countRows / 10) + 1; ?>">&raquo;</a></li>
+                    </ul>
+                  </div>
                 </div>
                 <!-- /.card -->
               </div>

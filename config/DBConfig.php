@@ -12,7 +12,5 @@ $conn->set_charset("utf8");
 
 // Check connection
 if ($conn->connect_error) {
-  die(" خطا در اتصال به پایگاه داده " . $conn->connect_error);
+    die(" خطا در اتصال به پایگاه داده " . $conn->connect_error);
 }
- 
-?>

@@ -1,42 +1,99 @@
 <?php
 
 session_start();
+require_once("../lib/utility.php");
+require_once("../config/DBConfig.php");
+
 $_SESSION['checkLogin'] = false;
 $_SESSION['userAdmin'] = "";
 
-require_once("../config/DBConfig.php");
+$siteKey = "";
+$secretKey = "";
+$captcha = "";
+
+$command2 = "select * from captcha";
+$stmt2 = $conn->prepare($command2);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+
+while ($row = $result2->fetch_assoc()) {
+  $siteKey = $row["siteKey"];
+  $secretKey = $row["secretKey"];
+}
+
+$browser = getBrowser();
+$ip = getIp();
+$os = getOS();
+$url = getUrl();
+$command3 = "insert into logs (url,ip,os,browser) values (?,?,?,?)";
+$stmt = $conn->prepare($command3);
+$stmt->bind_param("ssss", $url, $ip, $os, $browser);
+$stmt->execute();
+
+$message = "";
 
 if ($_POST) {
+
+  $command2 = "select * from captcha";
+  $stmt2 = $conn->prepare($command2);
+  $stmt2->execute();
+  $result2 = $stmt2->get_result();
+
+  while ($row = $result2->fetch_assoc()) {
+    $siteKey = $row["siteKey"];
+    $secretKey = $row["secretKey"];
+  }
+
+
   $_SESSION['checkLogin'] = false; //more security
 
   $username = $_POST["username"];
   $password = $_POST["password"];
 
-  $command = "select * from login where(username = ?)";
+  if (isset($_POST['g-recaptcha-response'])) {
+    $captcha = $_POST['g-recaptcha-response'];
+  }
 
-  $stmt = $conn->prepare($command);
-  $stmt->bind_param("s", $username); // there is one String to Bind ("s")
-  $stmt->execute();
-  $result = $stmt->get_result();
+  if ($captcha == "") {
+    $message = "<p class='alert alert-danger'>خطا در تکمیل کپچا</p>";
+  } else {
 
-  if ($result->num_rows == 1) {
+    $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
+    $output = file_get_contents($url);
+    $data = json_decode($output);
 
-    while ($row = $result->fetch_assoc()) {
+    // file_put_contents("../log.txt",var_export($data,true),PHP_EOL,FILE_APPEND);
 
-      $passHash = $row['pass'];
-      if (password_verify($password, $passHash)) {
-        $_SESSION['checkLogin'] = true;
-        $_SESSION['userAdmin'] = $username;
-        header('Location: dashboard.php');
-        exit;
+    if ($data->success) {
+
+      $command = "select * from login where(username = ?)";
+      $stmt = $conn->prepare($command);
+      $stmt->bind_param("s", $username); // there is one String to Bind ("s")
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if ($result->num_rows == 1) {
+
+        while ($row = $result->fetch_assoc()) {
+
+          $passHash = $row['pass'];
+          if (password_verify($password, $passHash)) {
+            $_SESSION['checkLogin'] = true;
+            $_SESSION['userAdmin'] = $username;
+            header('Location: dashboard.php');
+            exit;
+          } else {
+            $_SESSION['checkLogin'] = false;
+            $message = '<p class="alert alert-danger">نام کاربری یا رمز عبور اشتباه است</p>';
+          }
+        }
       } else {
         $_SESSION['checkLogin'] = false;
         $message = '<p class="alert alert-danger">نام کاربری یا رمز عبور اشتباه است</p>';
       }
+    } else {
+      $message = "<p class='alert alert-danger'>خطا در کپچا</p>";
     }
-  } else {
-    $_SESSION['checkLogin'] = false;
-    $message = '<p class="alert alert-danger">نام کاربری یا رمز عبور اشتباه است</p>';
   }
 }
 
@@ -67,6 +124,9 @@ if ($_POST) {
   <link rel="stylesheet" href="dist/css/bootstrap-rtl.min.css">
   <!-- template rtl version -->
   <link rel="stylesheet" href="dist/css/custom-style.css">
+
+  <script src='https://www.google.com/recaptcha/api.js?hl=fa' async defer></script>
+
 </head>
 
 <body class="hold-transition login-page">
@@ -79,8 +139,7 @@ if ($_POST) {
       <div class="card-body login-card-body">
         <p class="login-box-msg">فرم زیر را تکمیل کنید و ورود بزنید</p>
         <?php
-        if (isset($message))
-          echo $message;
+        echo $message;
         ?>
         <form method="post">
           <div class="input-group mb-3">
@@ -94,6 +153,9 @@ if ($_POST) {
             <div class="input-group-append">
               <span class="fa fa-lock input-group-text"></span>
             </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
           </div>
           <div class="row">
             <div class="col-8">

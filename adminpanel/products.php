@@ -7,10 +7,25 @@ if (!$_SESSION['checkLogin']) {
   exit;
 }
 
+require_once("../lib/utility.php");
+$browser = getBrowser();
+$ip = getIp();
+$os = getOS();
+$url = getUrl();
+$command3 = "insert into logs (url,ip,os,browser) values (?,?,?,?)";
+$stmt = $conn->prepare($command3);
+$stmt->bind_param("ssss", $url, $ip, $os, $browser);
+$stmt->execute();
+
 $command = "select * from products";
 $stmt = $conn->prepare($command);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$command2 = "select * from categories";
+$stmt2 = $conn->prepare($command2);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
 
 $msg = "";
 
@@ -481,7 +496,13 @@ if ($_POST) {
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">نوع دسته بندی</label>
-                          <input type="text" class="form-control" name="category" id="exampleInputPassword1" placeholder="دسته بندی محصول را وارد کنید">
+                          <select name="category" placeholder="دسته بندی محصول را وارد کنید" required class="form-control" id="exampleInputPassword1">
+                            <?php while ($row = $result2->fetch_assoc()) {
+                              echo '<option>' . $row["categoryName"] . '</option>';
+                            }
+                            ?>
+                          </select>
+
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">قیمت محصول</label>
@@ -504,6 +525,7 @@ if ($_POST) {
                             </div>
                           </div>
                         </div>
+
                       </div>
                       <!-- /.card-body -->
 
@@ -566,7 +588,7 @@ if ($_POST) {
                               <td><?php echo $row["price"]; ?></td>
                               <td><?php echo $row["stock"]; ?></td>
                               <td><?php echo $row["description"]; ?></td>
-                              <td><img width="50px" height="50px" src="<?php echo $row["imagePath"]; ?>"></td>
+                              <td><img width="50px" height="50px" src="<?php echo $row["imagePath"]; ?>" alt="!!!"></td>
                               <td>
                                 <a>حذف</a>
                                 <a>ویرایش</a>
